@@ -1,9 +1,5 @@
 In construction
 
-This script is based on vrp_farmer
-
-#  vrp_farmer https://github.com/reymihai/vrp_farmer
-
 
 <h4>vrp_gardener</h4>
 Gardener mission, buy your crunsh, prune plants and sell branches and leaves harvested
@@ -43,6 +39,12 @@ cfg.item {
 Set your language or create a new file for your language (lang/xx.lua)
 
 <br>
+<br>
 Set gardener locations, set your language, price and more
+<br>
 config/config.lua
 
+<br>
+This script is based on vrp_farmer
+
+#  vrp_farmer https://github.com/reymihai/vrp_farmer
