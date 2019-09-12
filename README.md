@@ -2,7 +2,9 @@ In construction
 
 
 <h4>vrp_gardener</h4>
-Gardener mission, buy your shears, prune plants.
+Gardener mission, buy your shears and work with gardering.
+<br>
+Use a shears for each gardening
 <br>
 <br>
 

@@ -41,6 +41,22 @@ function newPruneLocation(thePlayer)
     TriggerClientEvent("vrp_gardener:returnposition", user_id, pos)
 end
 
+--On start gardering
+RegisterServerEvent('vrp_gardener:startgardering')
+AddEventHandler('vrp_gardener:startgardering', function()
+    local thePlayer = source
+    local user_id = vRP.getUserId({thePlayer})
+    if user_id ~= nil then 
+        local shears = vRP.getInventoryItemAmount({user_id,"shears"}) 
+        if vRP.tryGetInventoryItem({user_id, "shears", shears, true}) then           
+            vRPclient.notify(thePlayer, {cfg.lang.actions.usesehars})
+            TriggerClientEvent('farm', player)
+        else 
+            vRPclient.notify(thePlayer, {cfg.lang.actions.nonshears})  
+        end
+    end
+end)
+
 --Receive trash leaves when player is pruning
 RegisterServerEvent('vrp_gardener:receiveMoney')
 AddEventHandler('vrp_gardener:receiveMoney', function(numberLocation)

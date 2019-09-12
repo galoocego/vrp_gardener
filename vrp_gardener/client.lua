@@ -53,16 +53,22 @@ Citizen.CreateThread(function()
         --Draw text to gardening  
         Draw3DText(pos[1],pos[2],pos[3],cfg.lang.actions.start,0.1,0.1)
         --Key press start gardening
-        if (IsControlJustReleased(1, cfg.keypress)) then 
-          TaskStartScenarioInPlace(player,"WORLD_HUMAN_GARDENER_PLANT", 0, true)   
-          Citizen.Wait(10 * cfg.time) -- time for haverst  
-          ClearPedTasksImmediately(player)
-          --Finalize gardening
-          TriggerServerEvent("vrp_gardener:receiveMoney",numberLocation)
+        if (IsControlJustReleased(1, cfg.keypress)) then
+          --In server test with player has a shears
+          TriggerServerEvent("vrp_gardener:startgardering")
         end
       end
     end
   end
+end)
+
+RegisterNetEvent("vrp_gardener:farm")
+AddEventHandler("vrp_gardener:farm", function(position)
+  TaskStartScenarioInPlace(player,"WORLD_HUMAN_GARDENER_PLANT", 0, true)   
+  Citizen.Wait(10 * cfg.time) -- time for haverst  
+  ClearPedTasksImmediately(player)
+  --Finalize gardening
+  TriggerServerEvent("vrp_gardener:receiveMoney",numberLocation)
 end)
 
 function Draw3DText(x,y,z,textInput,scaleX,scaleY)

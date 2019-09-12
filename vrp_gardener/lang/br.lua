@@ -5,6 +5,7 @@ local lang = {
     },
     actions= {
         prune = "Podar plantas",
+        usesehars = "Você está usando sua tesoura",
         nonshears = "Você não possui tesoura para podar as plantas",
         start = "Pressione E para iniciar a poda",
         missionstart = "Pressione E para receber as rotas para jardinagem"
