@@ -1,17 +1,25 @@
-
+resource_manifest_version '44febabe-d386-4d18-escob-5e627f4af937'
 
 description "vRP Gardener"
---ui_page "ui/index.html"
 
 dependency "vrp"
 
 client_scripts{ 
-  "lib/Tunnel.lua",
-  "lib/Proxy.lua",
-  "client.lua"
+  "@vrp/lib/utils.lua",
+  "@vrp/lib/Tunnel.lua",
+  "@vrp/lib/Proxy.lua",
+  "client.lua",
 }
 
 server_scripts{ 
   "@vrp/lib/utils.lua", 
-  "server.lua"
+  "@vrp/lib/Tunnel.lua",
+  "@vrp/lib/Proxy.lua",
+  "server.lua",
+}
+
+files{
+  "cfg/config.lua",
+  "lang/br.lua",
+  "lang/en.lua"
 }

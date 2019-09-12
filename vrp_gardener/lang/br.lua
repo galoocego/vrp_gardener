@@ -16,3 +16,5 @@ local lang = {
         nontrash = "Você não possui folhas e galhos secos"
     }
 }
+
+return lang
