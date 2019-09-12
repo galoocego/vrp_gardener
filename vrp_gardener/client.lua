@@ -1,29 +1,21 @@
-vRP = Proxy.getInterface("vRP") 
+
+vRP = Proxy.getInterface("vRP", "vrp_gardener") 
 vRPclient = Tunnel.getInterface("vRP", "vrp_gardener") 
-
-
-
-timplagradinarit = 10      -- planting time in  seconds
-timplacules =  10            -- harvesting time in seconds
- 
-       
---local plantsObject = GetHashKey("prop_bush_lrg_01c_cr")         -- the plant
---local plants = {}
-
-caciula = false 
 
 local position = {}
 local aux = 0
 
-cfg = module("vrp_gardener","cfg/config")
+cfg = module("vrp_gardener","config/config")
 
 local pos = {}
-
+local numberLocation = 0
+--Receive position blip prune
 RegisterNetEvent("vrp_gardener:returnposition")
 AddEventHandler("vrp_gardener:returnposition", function(position)
-  --vRPclient.setNamedMarker(player,{"vRP:mission", position[1],position[2],position[3]-2,0.7,0.7,0.5,255,226,0,125,150})
   pos = position
+  numberLocation = numberLocation + 1
 end)
+
 
 --Initialize gardener mission
 Citizen.CreateThread(function()
@@ -31,17 +23,17 @@ Citizen.CreateThread(function()
     Citizen.Wait(0) 
     local player = GetPlayerPed(-1)
     local coord = GetEntityCoords(player)
-    DrawMarker(22, cfg.startermission[1],cfg.startermission[2],cfg.startermission[3],0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 2.0, 2.0, 2.0, 0, 153, 250, 50, true, true, 2, nil, nil, true ) 
+    DrawMarker(22, cfg.startermission[1],cfg.startermission[2],cfg.startermission[3],0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 2.0, 2.0, 2.0, 0, 153, 250, 50, true, true, 2, nil, nil, true )
 
-    if (GetDistanceBetweenCoords(coord.x, coord.y, coord.z, 2565.0576171875,4685.8911132813,34.08602142334 , true)) < 5.0 then  
-      Draw3DText(cfg.startermission[1],cfg.startermission[2],cfg.startermission[3],cfg.lang.actions.start,0.1,0.1)
-      if(IsControlJustReleased(1, cfg.keypress))then
-        TriggerServerEvent('vrp_gardener:startmission',function(pos)
+      if (GetDistanceBetweenCoords(coord.x, coord.y, coord.z, 2565.0576171875,4685.8911132813,34.08602142334 , true)) < 5.0 then  
+        Draw3DText(cfg.startermission[1],cfg.startermission[2],cfg.startermission[3],cfg.lang.actions.start,0.1,0.1)      if(IsControlJustReleased(1, cfg.keypress))then
+        TriggerServerEvent('vrp_gardener:startmission',function()
         end) 
       end 
     end
   end
 end)
+
 
 --When player in position to crump
 Citizen.CreateThread(function()
@@ -51,36 +43,18 @@ Citizen.CreateThread(function()
     local coord = GetEntityCoords(player)
     local item = false 
 
-    --Verify if player has crump
-    if (GetDistanceBetweenCoords(coord.x, coord.y, coord.z, pos[1],pos[2],pos[3], true)) < 5.0 then
-      Draw3DText(pos[1],pos[2],pos[3],cfg.lang.actions.start,0.1,0.1)
-      if (IsControlJustReleased(1, cfg.keypress)) then 
-        TaskStartScenarioInPlace(player,"WORLD_HUMAN_GARDENER_PLANT", 0, true)   
-        Citizen.Wait(10 * cfg.time) -- time for haverst  
-        ClearPedTasksImmediately(player)
-        print(player)
-        TriggerServerEvent("vrp_gardener:inventoryadd")
-      end
-      --[[
-      TriggerServerEvent('inventorycrump', function(i) 
-        item = i
-      end)  
-      if(item) then
-        Draw3DText(position,cfg.lang.actions.start,0.1,0.1)
-        DrawMarker(0, position,0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 2.0, 2.0, 2.0, 255, 128, 0, 50,true, true, 2, nil, nil, true )
-        --Accept prune
-        if(IsControlJustReleased(1, cfg.keypress))then
+    if cfg.numberLocation >= numberLocation then
+      --Verify if player has crump
+      if (GetDistanceBetweenCoords(coord.x, coord.y, coord.z, pos[1],pos[2],pos[3], true)) < 5.0 then
+        Draw3DText(pos[1],pos[2],pos[3],cfg.lang.actions.start,0.1,0.1)
+        if (IsControlJustReleased(1, cfg.keypress)) then 
           TaskStartScenarioInPlace(player,"WORLD_HUMAN_GARDENER_PLANT", 0, true)   
-          vRP.notify(cfg.lang.actions.haverst)
-
           Citizen.Wait(10 * cfg.time) -- time for haverst  
           ClearPedTasksImmediately(player)
-          TriggerServerEvent('inventoryadd')
+          print(player)
+          TriggerServerEvent("vrp_gardener:receiveMoney",numberLocation)
         end
-      else 
-        vRP.notify({cfg.lang.actions.noncrump})
-      end   
-      --]]
+      end
     end
   end
 end)

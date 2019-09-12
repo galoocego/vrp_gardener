@@ -1,10 +1,8 @@
-local language = "lang/en"
+local cfg = {}
 
 --set on model your language, change br for en.....
-local lang = module("vrp_gardener","lang/br")
+local lang = model("lang/br")
 
-
-local cfg = {}
 --set your language
 cfg.lang = lang
 
@@ -14,22 +12,19 @@ cfg.keypress = 51
 --set harvest time
 cfg.time = 1000
 
---set number of trash leaves player receive
-cfg.trashleaves = 80
-
---set value per leave trash
-cfg.valupertrash = 100
+--set amount receive for prune
+cfg.amount = 600
 
 --set starter mission location
-cfg.startermission = {2565.0576171875,4685.8911132813,34.08602142334}
+cfg.startermission = 2565.0576171875,4685.8911132813,34.08602142334
 
---set trash leaves location
-cfg.trasheaveslocation = "879.5114746094,4489.646484375,48.19352722168"
+--set number locations player can prune when start mission
+cfg.numberLocations = 4
 
 --set locations for prune, random locations
 cfg.prunelocations = {
-    {2455.107421875,4326.8129882813,36.627075195313},
-    {2548.1076660156,4686.7885742188,33.674709320068}
+    {879.5114746094,4489.646484375,48.19352722168},
+    --{2492.8205566406,4858.9091796875,36.837772369385}
 }
 
-return cfg
+

@@ -31,8 +31,7 @@ add on vrp/items.lua the crump item and leaves
 
 ```lua
 cfg.item {
-    ["crump"] = {"Tesoura", "Tesoura para jardinagem.", nil, 0.3},
-    ["leaves"] = {"Folhas","Folhas e galhos", nil, 0.4 }
+    ["crump"] = {"Tesoura", "Tesoura para jardinagem.", nil, 0.3}
 }
 ```
 <br>
@@ -42,7 +41,7 @@ Set your language or create a new file for your language (lang/xx.lua)
 <br>
 Set gardener locations, set your language, price and more
 <br>
-config/config.lua
+cfg/config.lua
 
 <br>
 <br>
