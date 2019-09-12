@@ -9,13 +9,6 @@ cfg = module("vrp_gardener","config/config")
 
 local pos = {}
 local numberLocation = 0
---Receive position blip prune
-RegisterNetEvent("vrp_gardener:returnposition")
-AddEventHandler("vrp_gardener:returnposition", function(position)
-  pos = position
-  numberLocation = numberLocation + 1
-end)
-
 
 --Initialize gardener mission
 Citizen.CreateThread(function()
@@ -26,16 +19,25 @@ Citizen.CreateThread(function()
     --Mark mission start
     DrawMarker(22, cfg.startermission[1],cfg.startermission[2],cfg.startermission[3],0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 2.0, 2.0, 2.0, 0, 153, 250, 50, true, true, 2, nil, nil, true )
 
-      --Player near mark
-      if (GetDistanceBetweenCoords(coord.x, coord.y, coord.z, 2565.0576171875,4685.8911132813,34.08602142334 , true)) < 5.0 then  
-        --Show text
-        Draw3DText(cfg.startermission[1],cfg.startermission[2],cfg.startermission[3],cfg.lang.actions.missionstart,0.1,0.1)      if(IsControlJustReleased(1, cfg.keypress))then
+    --Player near mark
+    if (GetDistanceBetweenCoords(coord.x, coord.y, coord.z, 2565.0576171875,4685.8911132813,34.08602142334 , true)) < 5.0 then
+      --Show text
+      Draw3DText(cfg.startermission[1],cfg.startermission[2],cfg.startermission[3],cfg.lang.actions.missionstart,0.1,0.1)
+
+      --If press to start mission
+      if(IsControlJustReleased(1, cfg.keypress)) then
         --Execute proccess on server
-        TriggerServerEvent('vrp_gardener:startmission',function()
-        end) 
+        TriggerServerEvent('vrp_gardener:startmission',function() end)
       end 
     end
   end
+end)
+
+--Receive position blip for gardering
+RegisterNetEvent("vrp_gardener:returnposition")
+AddEventHandler("vrp_gardener:returnposition", function(position)
+  pos = position
+  numberLocation = numberLocation + 1
 end)
 
 
@@ -45,7 +47,6 @@ Citizen.CreateThread(function()
     Citizen.Wait(0) 
     local player = GetPlayerPed(-1)
     local coord = GetEntityCoords(player)
-    local item = false 
 
     if cfg.numberLocation >= numberLocation then
       --Verify if player near gardening  location
@@ -62,12 +63,13 @@ Citizen.CreateThread(function()
   end
 end)
 
+--Player has shears, then gardering start
 RegisterNetEvent("vrp_gardener:farm")
 AddEventHandler("vrp_gardener:farm", function(position)
   TaskStartScenarioInPlace(player,"WORLD_HUMAN_GARDENER_PLANT", 0, true)   
   Citizen.Wait(10 * cfg.time) -- time for haverst  
   ClearPedTasksImmediately(player)
-  --Finalize gardening
+  --Finalize gardening, pay to player
   TriggerServerEvent("vrp_gardener:receiveMoney",numberLocation)
 end)
 
