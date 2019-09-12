@@ -2,37 +2,44 @@ In construction
 
 
 <h4>vrp_gardener</h4>
-Gardener mission, buy your crunsh, prune plants and sell branches and leaves harvested
+Gardener mission, buy your shears, prune plants.
 <br>
 <br>
 
 <h4>Requeriements</h4>
 <ul>
     <li>vRP vesrsion 0.5</li>
+    <li>Superior versions not tested</li>
 </ul>
 
 <br>
 <br>
 
 <h4>Config</h4>
-add on vrp/market.lua crump item and costs.
+add on vrp/market.lua shears item and costs.
 
 ```lua
 cfg.market_types = {
   ["food_or_other"] = {
-      ["crump"] = 250
+      ["shears"] = 250
   }
 }
 ```
 if you want, you can add in your shoopmarket too
 
 <br>
-add on vrp/items.lua the crump item and leaves
+add on vrp/items.lua the shears item and leaves
 
 ```lua
 cfg.item {
-    ["crump"] = {"Tesoura", "Tesoura para jardinagem.", nil, 0.3}
+    ["shears"] = {"shears", "shears for gardener.", nil, 0.3}
 }
+```
+<br>
+add on vrp/cfg/blips_markes.lua blip for start mission (use config/config.lua, cfg.startmission coords)
+
+```lua
+    {2565.0576171875, 4685.8911132813, 34.08602142334,468,12,"Get a gardener locations"}
 ```
 <br>
 Set your language or create a new file for your language (lang/xx.lua)

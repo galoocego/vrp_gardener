@@ -5,15 +5,10 @@ local lang = {
     },
     actions= {
         prune = "Podar plantas",
-        haverst = "Recolher galhos e folhas",
-        buycramp = "Pressione E para comprar sua tesoura de poda",
-        manycrump = "Digite a quantidade de tesouras que pretende comprar",
-        noncrump = "Você não possui tesoura para podar as plantas",
+        nonshears = "Você não possui tesoura para podar as plantas",
         start = "Pressione E para iniciar a poda",
-        nommoney = "Você não possui dinheiro suficiente",
+        missionstart = "Pressione E para receber as rotas para jardinagem"
         recmoney = "Você recebeu ",
-        trashleaves = "Pressione E para triturar as folhas e galhos",
-        nontrash = "Você não possui folhas e galhos secos"
     }
 }
 
