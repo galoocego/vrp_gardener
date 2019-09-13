@@ -48,9 +48,9 @@ AddEventHandler('vrp_gardener:startgardering', function()
     local user_id = vRP.getUserId({thePlayer})
     if user_id ~= nil then 
         local shears = vRP.getInventoryItemAmount({user_id,"shears"}) 
-        if vRP.tryGetInventoryItem({user_id, "shears", shears, true}) then           
+        if vRP.tryGetInventoryItem({user_id, "shears", 1, true}) then           
             vRPclient.notify(thePlayer, {cfg.lang.actions.usesehars})
-            TriggerClientEvent('farm', player)
+            TriggerClientEvent("vrp_gardener:farm")
         else 
             vRPclient.notify(thePlayer, {cfg.lang.actions.nonshears})  
         end
@@ -64,7 +64,7 @@ AddEventHandler('vrp_gardener:receiveMoney', function(numberLocation)
     local user_id = vRP.getUserId({thePlayer})
     if user_id ~= nil then 
        vRP.giveMoney({user_id, cfg.amount})
-       vRPclient.notify(thePlayer, {cfg.lang.actions.recmoney})
+       vRPclient.notify(thePlayer, {cfg.lang.actions.recmoney}) 
 
        --If has locations for prune
        if numberLocation < cfg.numberLocations then

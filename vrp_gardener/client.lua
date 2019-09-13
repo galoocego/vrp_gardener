@@ -40,6 +40,16 @@ AddEventHandler("vrp_gardener:returnposition", function(position)
   numberLocation = numberLocation + 1
 end)
 
+--Player has shears, then gardering start
+RegisterNetEvent("vrp_gardener:farm")
+AddEventHandler("vrp_gardener:farm", function()
+  print("chegou")
+  TaskStartScenarioInPlace(player,"WORLD_HUMAN_GARDENER_PLANT", 0, true)   
+  Citizen.Wait(10 * cfg.time) -- time for haverst  
+  ClearPedTasksImmediately(player)
+  --Finalize gardening, pay to player
+  TriggerServerEvent("vrp_gardener:receiveMoney",numberLocation)
+end)
 
 --When player in position to gardening
 Citizen.CreateThread(function()
@@ -48,7 +58,7 @@ Citizen.CreateThread(function()
     local player = GetPlayerPed(-1)
     local coord = GetEntityCoords(player)
 
-    if cfg.numberLocation >= numberLocation then
+    if cfg.numberLocations >= numberLocation then
       --Verify if player near gardening  location
       if (GetDistanceBetweenCoords(coord.x, coord.y, coord.z, pos[1],pos[2],pos[3], true)) < 5.0 then
         --Draw text to gardening  
@@ -63,15 +73,6 @@ Citizen.CreateThread(function()
   end
 end)
 
---Player has shears, then gardering start
-RegisterNetEvent("vrp_gardener:farm")
-AddEventHandler("vrp_gardener:farm", function(position)
-  TaskStartScenarioInPlace(player,"WORLD_HUMAN_GARDENER_PLANT", 0, true)   
-  Citizen.Wait(10 * cfg.time) -- time for haverst  
-  ClearPedTasksImmediately(player)
-  --Finalize gardening, pay to player
-  TriggerServerEvent("vrp_gardener:receiveMoney",numberLocation)
-end)
 
 function Draw3DText(x,y,z,textInput,scaleX,scaleY)
     local px,py,pz=table.unpack(GetGameplayCamCoords())
